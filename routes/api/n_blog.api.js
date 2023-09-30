@@ -1,15 +1,16 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-const getNaverBlogs = async () => {
+const getNaverBlogs = async (req, res, next) => {
   // Launch the browser and open a new blank page
   const results = [];
   const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
   await page.setViewport({ width: 1080, height: 1024 });
   // Navigate the page to a URL
+  console.log(req.query.keyword);
   await page.goto(
-    'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=%EB%A7%9D%EC%9B%90%EB%8F%99+%EB%A7%9B%EC%A7%91'
+    `https://search.naver.com/search.naver?where=view&sm=tab_jum&query=${req.query.keyword}`
   );
   const content = await page.content();
   const $ = cheerio.load(content);
@@ -28,5 +29,7 @@ const getNaverBlogs = async () => {
 
   await browser.close();
 
-  return results;
+  res.send(results);
 };
+
+module.exports = getNaverBlogs;

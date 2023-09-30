@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header">헤더</div>
+    </header>
+    <main>
+      출력할 검색결과의 키워드를 입력하세요
+      <form>
+        <input type="text" id="keyword" />
+        <button id="searchBtn">검색</button>
+      </form>
+      <div class="search-result-container">
+        <div class="search-result">
+          <div class="search-result__keyword"></div>
+          <div class="search-result__results"></div>
+          <div class="search-result__copy" id="copyBtn"></div>
+        </div>
+      </div>
+    </main>
+    <footer>푸터</footer>
+  </body>
+  <script>
+    $('#searchBtn').on('click', function (e) {
+      e.preventDefault();
+      console.log('dd');
+
+      const keyword = $('#keyword').val();
+      axios.get(`/api/naver?keyword=${keyword}`).then((result) => {
+        const { data } = result;
+        let results = '';
+        data.forEach((i) => {
+          results += `<div>${i}</div>`;
+        });
+        $('.search-result').css({ border: '1px solid black' });
+        $('.search-result__keyword').text(`${keyword}`);
+        $('.search-result__results').html(results);
+      });
+    });
+  </script>
+</html>
