@@ -17,11 +17,11 @@
         <input type="text" id="keyword" />
         <button id="searchBtn">검색</button>
       </form>
+      <button class="search-result__copy" id="copyBtn">복사</button>
       <div class="search-result-container">
         <div class="search-result">
           <div class="search-result__keyword"></div>
-          <div class="search-result__results"></div>
-          <div class="search-result__copy" id="copyBtn"></div>
+          <table class="search-result__results"></table>
         </div>
       </div>
     </main>
@@ -37,12 +37,21 @@
         const { data } = result;
         let results = '';
         data.forEach((i) => {
-          results += `<div>${i}</div>`;
+          results += `<tr>${i}</tr>`;
         });
         $('.search-result').css({ border: '1px solid black' });
         $('.search-result__keyword').text(`${keyword}`);
         $('.search-result__results').html(results);
       });
+    });
+    $('#copyBtn').on('click', function (e) {
+      const content = document.querySelector('.search-result__results');
+      var r = document.createRange();
+      r.selectNode(content);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+
+      document.execCommand('copy');
     });
   </script>
 </html>

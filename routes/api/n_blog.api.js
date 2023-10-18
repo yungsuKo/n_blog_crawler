@@ -16,14 +16,17 @@ const getNaverBlogs = async (req, res, next) => {
   const $ = cheerio.load(content);
 
   const lists = $(
-    '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li:nth-child(n) > div.total_wrap.api_ani_send > div > a'
+    '#main_pack > section > div > div._list > panel-list > div > more-contents > div > ul > li:nth-child(n) > div.total_wrap.api_ani_send > div > a'
   );
+
   lists.each((index, list) => {
-    const link = list.attribs.href.split('/');
-    if (link[2].includes('blog')) {
-      console.log(index);
-      console.log(`${link[3]}@naver.com`);
-      results.push(`${link[3]}@naver.com`);
+    if (list.attribs.href.split('/')[2].includes('blog')) {
+      const postLink = list.attribs.href;
+      const email = `${list.attribs.href.split('/')[3]}@naver.com`;
+      const titleL = $(list).text();
+
+      console.log(titleL);
+      results.push(`<td>${titleL}</td><td>${postLink}</td> <td>${email}</td>`);
     }
   });
 
