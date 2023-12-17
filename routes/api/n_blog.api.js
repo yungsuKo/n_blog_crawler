@@ -16,7 +16,7 @@ const getNaverBlogs = async (req, res, next) => {
   const $ = cheerio.load(content);
 
   const lists = $(
-    '#main_pack > section > div > div._list > panel-list > div > more-contents > div > ul > li:nth-child(n) > div.total_wrap.api_ani_send > div > a'
+    '#main_pack > section > more-contents > div > ul > li:nth-child(n) > div > div.detail_box > div.title_area > a'
   );
 
   lists.each((index, list) => {
