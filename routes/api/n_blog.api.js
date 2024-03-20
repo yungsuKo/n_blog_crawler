@@ -16,9 +16,9 @@ const getNaverBlogs = async (req, res, next) => {
   const $ = cheerio.load(content);
 
   const lists = $(
-    '#main_pack > section > more-contents > div > ul > li:nth-child(n) > div > div.detail_box > div.title_area > a'
+    '#main_pack > section > div.api_subject_bx > ul > li:nth-child(n) > div.view_wrap > div.user_box > div.user_box_inner > a'
   );
-
+  console.log(lists);
   lists.each((index, list) => {
     if (list.attribs.href.split('/')[2].includes('blog')) {
       const postLink = list.attribs.href;
